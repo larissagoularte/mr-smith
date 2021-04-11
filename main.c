@@ -1,5 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define MAX_CHAR 30
+
+void newUser(); 
+void login();
+void createUsername(char username[30]);
+
+/*
+ * REPEATED USERNAMES??
+ */ 
 
 int main() {
 
@@ -11,19 +23,19 @@ int main() {
     printf("3 - Quit\n");
 
     scanf("%d", &opt);
+    getchar();                  // Deals with the \n stored in buffer
 
     switch(opt) {
         case 1:
-            //login();
+            login();
             printf("Loggin in...\n");
             break;
         case 2:
-            //newUser();
-            printf("Creating new user...\n");
+            newUser();
             break;
         case 3:
             printf("Quiting...");
-            exit(0);                        // 0 indicates sucessfull termination
+            exit(EXIT_SUCCESS);                       
             break;
     }
 
@@ -32,4 +44,58 @@ int main() {
 
 void login() {}
 
-void newUser() {}
+/*
+ * Creates new user
+ * Stores password in data base
+ * Returns to main menu
+*/
+
+void newUser() {
+    
+    FILE *fDB;
+    char username[MAX_CHAR];
+    char password[MAX_CHAR];
+    bool isUsername = false;
+    int k = 0;
+
+    fDB = fopen("database.txt", "wb");      // Opens file in binary write mode because the hashes will have weird characters
+
+    // Check if the file opened correctly
+    if(fDB == NULL) {
+        printf("\nError with file. \nLeaving...");
+        exit(EXIT_FAILURE);
+    }
+
+
+    createUsername(username);
+
+    do
+    {
+        printf("%s is your username. \nAre you happy? \nPress 1 to continue or 0 to choose a new username.", username);
+        scanf("%d", &k);
+        getchar();
+
+        if(k == 0) {
+            createUsername(username);
+        }
+        else if(k == 1) {
+            isUsername = true;
+        }         
+
+    } while (!isUsername);
+    
+
+}
+
+void createUsername(char username[30]) {
+    int len = 0;
+
+    do {
+        printf("\nPlease choose a username with 4 to 30 characters lenght. \nNew Username:");
+        fgets(username, MAX_CHAR, stdin);
+
+        len = strlen(username);
+       
+
+    } while (len < 5);
+}
