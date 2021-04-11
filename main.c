@@ -9,10 +9,6 @@ void newUser();
 void login();
 void createUsername(char username[30]);
 
-/*
- * REPEATED USERNAMES??
- */ 
-
 int main() {
 
     int opt = 0;
@@ -69,6 +65,10 @@ void newUser() {
 
     createUsername(username);
 
+    /* If the username has more than 30 characters, only the first 30 will be stored.
+     * This asks the user whether they're happy with the username
+     * FIXME check for repeated usernames
+     */ 
     do
     {
         printf("%s is your username. \nAre you happy? \nPress 1 to continue or 0 to choose a new username.", username);
@@ -83,7 +83,6 @@ void newUser() {
         }         
 
     } while (!isUsername);
-    
 
 }
 
@@ -95,7 +94,5 @@ void createUsername(char username[30]) {
         fgets(username, MAX_CHAR, stdin);
 
         len = strlen(username);
-       
-
     } while (len < 5);
 }
