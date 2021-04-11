@@ -19,7 +19,7 @@ int main() {
     printf("3 - Quit\n");
 
     scanf("%d", &opt);
-    getchar();                  // Deals with the \n stored in buffer
+    getchar();                                                                  // Deals with the \n stored in buffer
 
     switch(opt) {
         case 1:
@@ -49,12 +49,12 @@ void login() {}
 void newUser() {
     
     FILE *fDB;
-    char username[MAX_CHAR];
+    char username[MAX_CHAR];                                                    // FIXME pass by reference
     char password[MAX_CHAR];
     bool isUsername = false;
     int k = 0;
 
-    fDB = fopen("database.txt", "wb");      // Opens file in binary write mode because the hashes will have weird characters
+    fDB = fopen("database.txt", "wb");                                          // Opens file in binary write mode because the hashes will have weird characters
 
     // Check if the file opened correctly
     if(fDB == NULL) {
@@ -62,12 +62,11 @@ void newUser() {
         exit(EXIT_FAILURE);
     }
 
-
+    // TODO check for repeated usernames
     createUsername(username);
 
     /* If the username has more than 30 characters, only the first 30 will be stored.
      * This asks the user whether they're happy with the username
-     * FIXME check for repeated usernames
      */ 
     do
     {
