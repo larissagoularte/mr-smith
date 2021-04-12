@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define MAX_CHAR 30
+#define CHAR_MAX 30
 
 void newUser(); 
 void login();
@@ -15,13 +15,14 @@ int main() {
 
     printf("Welcome! \nChoose an option from the menu bellow:\n");
     printf("1 - Login\n");
+    
     printf("2 - Create new user\n");
     printf("3 - Quit\n");
 
     scanf("%d", &opt);
     getchar();                                                                  // Deals with the \n stored in buffer
 
-    switch(opt) {
+    switch (opt) {
         case 1:
             login();
             printf("Loggin in...\n");
@@ -49,15 +50,15 @@ void login() {}
 void newUser() {
     
     FILE *fDB;
-    char username[MAX_CHAR];                                                    // FIXME pass by reference
-    char password[MAX_CHAR];
+    char username[CHAR_MAX];                                                    // FIXME pass by reference
+    char password[CHAR_MAX];
     bool isUsername = false;
     int k = 0;
 
     fDB = fopen("database.txt", "wb");                                          // Opens file in binary write mode because the hashes will have weird characters
 
     // Check if the file opened correctly
-    if(fDB == NULL) {
+    if (fDB == NULL) {
         printf("\nError with file. \nLeaving...");
         exit(EXIT_FAILURE);
     }
@@ -74,10 +75,10 @@ void newUser() {
         scanf("%d", &k);
         getchar();
 
-        if(k == 0) {
+        if (k == 0) {
             createUsername(username);
         }
-        else if(k == 1) {
+        else if (k == 1) {
             isUsername = true;
         }         
 
@@ -90,7 +91,7 @@ void createUsername(char username[30]) {
 
     do {
         printf("\nPlease choose a username with 4 to 30 characters lenght. \nNew Username:");
-        fgets(username, MAX_CHAR, stdin);
+        fgets(username, CHAR_MAX, stdin);
 
         len = strlen(username);
     } while (len < 5);
